@@ -1,8 +1,7 @@
 FROM fabric8/jenkins-jnlp-client
 
-RUN yum install -y curl
-
-RUN yum install -y yum-utils
-RUN yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
-RUN yum makecache fast
-RUN yum install -y docker-ce
+# Running all yum related command in one RUN to minimalise the size of the produced Docker image
+RUN yum install -y yum-utils \
+    && yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo \
+    && yum install -y docker-ce \
+    && yum -y clean all
